@@ -18,7 +18,7 @@ var schemas = {
 	'e': env_schema
 };
 
-var PostmanValidator = jsface.Class({
+var postman_validator = jsface.Class({
 	$singleton: true,
 
 	validate: function (schemaCode, input) {
@@ -64,6 +64,6 @@ var PostmanValidator = jsface.Class({
 
 });
 
-module.exports = PostmanValidator;
+module.exports = postman_validator;
 
 

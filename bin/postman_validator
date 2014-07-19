@@ -6,7 +6,7 @@
 */
  
 var program = require('commander'),
-	Validator = require('../PostmanValidator.js');
+	Validator = require('../postman_validator.js');
 
 
 function parseArguments() {

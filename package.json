@@ -1,5 +1,5 @@
 {
-  "name": "PostmanValidator",
+  "name": "postman_validator",
   "version": "0.0.0",
   "description": "A validator for Postman file formats",
   "main": "PostmanValidator",
@@ -13,10 +13,11 @@
   "keywords": [
     "postman",
     "newman",
-    "validator"
+    "validator",
+    "postman_validator"
   ],
   "bin": {
-    "postmanValidator": "./bin/validator"
+    "postman_validator": "./bin/postman_validator"
   },
   "dependencies": {
     "commander": "2.x.x",
