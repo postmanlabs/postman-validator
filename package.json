@@ -1,8 +1,8 @@
 {
-  "name": "postmanvalidator",
+  "name": "PostmanValidator",
   "version": "0.0.0",
   "description": "A validator for Postman file formats",
-  "main": "validator",
+  "main": "PostmanValidator",
    "repository": {
     "type": "git",
     "url": "git://github.com:abhijitkane/PostmanValidator.git"
@@ -15,9 +15,13 @@
     "newman",
     "validator"
   ],
+  "bin": {
+    "postmanValidator": "./bin/postmanValidator"
+  },
   "dependencies": {
     "commander": "2.x.x",
-    "JSV": "4.0.2"
+    "JSV": "4.0.2",
+    "jsface": "2.2.x"
   },
   "author": "Abhijit Kane",
   "license": "Apache"
