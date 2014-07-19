@@ -21,6 +21,14 @@ var schemas = {
 var postman_validator = jsface.Class({
 	$singleton: true,
 
+	/*
+	return schema:
+	{
+		"status": true / false,
+		"message": "Schema validation failed",
+		"error": {}
+	}*/
+
 	validate: function (schemaCode, input) {
 		input = this._loadJSONfile(input);
 		this.validateJSON(schemaCode,input);
@@ -29,15 +37,22 @@ var postman_validator = jsface.Class({
 	validateJSON: function(schemaCode, input) {
 		var schema = schemas[schemaCode];
 		if(typeof schema === "undefined") {
-			this.printError("Invalid schema code\n");
+			return this._getReturnObj(false,"Invalid schema code",{});
 		}
 		var env = JSV.createEnvironment();
 		var report = env.validate(input, schema);
 		if(report.errors.length) {
-			process.stdout.write("Validation failed\n");
-			return report.errors;
+			return this._getReturnObj(false,"Validation failed",report.errors);
 		}
-		process.stdout.write("Validation successful\n");
+		return this._getReturnObj(true,"Validation successful",{});
+	},
+
+	_getReturnObj(status,message,error) {
+		return {
+				"status": status,
+				"message": message,
+				"error": error
+		};
 	},
 
 	printError: function(str) {
@@ -47,22 +62,20 @@ var postman_validator = jsface.Class({
 
 	_loadJSONfile: function(filename, encoding) {
 		if(!fs.existsSync(filename)) {
-			this.printError("File " + filename+" could not be found\n");
+			return this._getReturnObj(false,"File " + filename+" could not be found",{});
 		}
 		var contents=null;
 		try {
 			if (typeof (encoding) == 'undefined') encoding = 'utf8';
 			var contents = fs.readFileSync(filename, encoding);
 		} catch (err) {
-			process.stdout.write(err);
-			process.exit(-1);
+			return this._getReturnObj(false,"Error reading file",{});
 		}
 
 		try {
 			return JSON.parse(contents);
 		} catch(err) {
-			process.stdout.write("Invalid json\n");
-			process.exit(-1);
+			return this._getReturnObj(false,"Unable to parse JSON",{});
 		}
 	}
 
