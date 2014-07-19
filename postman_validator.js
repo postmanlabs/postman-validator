@@ -22,11 +22,15 @@ var postman_validator = jsface.Class({
 	$singleton: true,
 
 	validate: function (schemaCode, input) {
+		input = this._loadJSONfile(input);
+		this.validateJSON(schemaCode,input);
+	},
+
+	validateJSON: function(schemaCode, input) {
 		var schema = schemas[schemaCode];
 		if(typeof schema === "undefined") {
 			this.printError("Invalid schema code\n");
 		}
-		input = this._loadJSONfile(input);
 		var env = JSV.createEnvironment();
 		var report = env.validate(input, schema);
 		if(report.errors.length) {

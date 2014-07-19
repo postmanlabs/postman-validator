@@ -1,8 +1,8 @@
 {
   "name": "postman_validator",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "A validator for Postman file formats",
-  "main": "PostmanValidator",
+  "main": "postman_validator.js",
    "repository": {
     "type": "git",
     "url": "git://github.com:abhijitkane/PostmanValidator.git"
