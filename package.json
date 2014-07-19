@@ -16,7 +16,7 @@
     "validator"
   ],
   "bin": {
-    "postmanValidator": "./bin/postmanValidator"
+    "postmanValidator": "./bin/validator"
   },
   "dependencies": {
     "commander": "2.x.x",
