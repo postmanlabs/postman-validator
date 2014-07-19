@@ -47,7 +47,7 @@ var postman_validator = jsface.Class({
 		return this._getReturnObj(true,"Validation successful",{});
 	},
 
-	_getReturnObj(status,message,error) {
+	_getReturnObj: function(status,message,error) {
 		return {
 				"status": status,
 				"message": message,
