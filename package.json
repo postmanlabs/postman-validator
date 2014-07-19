@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "A validator for Postman file formats",
   "main": "validator",
+   "repository": {
+    "type": "git",
+    "url": "git://github.com:abhijitkane/PostmanValidator.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,6 +15,10 @@
     "newman",
     "validator"
   ],
+  "dependencies": {
+    "commander": "2.x.x",
+    "JSV": "4.0.2"
+  },
   "author": "Abhijit Kane",
   "license": "Apache"
 }

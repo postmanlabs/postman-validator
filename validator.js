@@ -3,26 +3,33 @@
 * Main validator file
 */
  
-var color   = require('cli-color'),
-	program = require('commander'),
-	path    = require('path'),
-	request = require('unirest'),
+var program = require('commander'),
 	fs      = require('fs'),
 	JSV = require("JSV").JSV;
 
-var config = loadJSONfile('./sample.globals');
 var global_schema = require('./json-schemas/globals.schema.json');
 var env_schema = require('./json-schemas/environment.schema.json');
 var collection_schema = require('./json-schemas/collection.schema.json');
 
 
 function loadJSONfile (filename, encoding) {
+	if(!fs.existsSync(filename)) {
+		printError("File " + filename+" could not be found\n");
+	}
+	var contents=null;
 	try {
 		if (typeof (encoding) == 'undefined') encoding = 'utf8';
 		var contents = fs.readFileSync(filename, encoding);
-		return JSON.parse(contents);
 	} catch (err) {
-		throw err;	
+		process.stdout.write(err);
+		process.exit(-1);
+	}
+
+	try {
+		return JSON.parse(contents);
+	} catch(err) {
+		process.stdout.write("Invalid json\n");
+		process.exit(-1);
 	}
 }
 
@@ -47,24 +54,24 @@ function parseArguments() {
 
 	program.parse(process.argv);
 
-	if(process.collection) {
-		if(process.environment || process.globals) {
+	if(program.collection) {
+		if(program.environment || program.globals) {
 			onlyOneValidator();
 		}
 
-		return validate(collection_schema,process.collection);
+		return validate(collection_schema,program.collection);
 	}
-	else if(process.environment) {
-		if(process.globals) {
+	else if(program.environment) {
+		if(program.globals) {
 			onlyOneValidator();
 		}
-		return validate(env_schema,process.collection);
+		return validate(env_schema,program.environment);
 	}
-	else if(process.globals) {
-		return validate(global_schema,process.collection);
+	else if(program.globals) {
+		return validate(global_schema,program.globals);
 	}
 	else {
-		printError("At least one option must be specified. Use --help to see the list of options");
+		printError("At least one option must be specified. Use --help to see the list of options\n");
 	}
 }
 
@@ -73,7 +80,7 @@ function validate(schema, input) {
 	var env = JSV.createEnvironment();
 	var report = env.validate(input, schema);
 	if(report.errors.length) {
-		console.log("Error");
+		process.stdout.write("Validation failed\n");
 		return report.errors;
 	}
 
