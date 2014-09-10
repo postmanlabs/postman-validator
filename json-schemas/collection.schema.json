@@ -23,6 +23,55 @@
             "id": "http://jsonschema.net/name",
             "required":true
         },
+        "folders": {
+            "type":"array",
+            "id": "http://jsonschema.net/folders",
+            "required":false,
+            "items":
+                {
+                    "type":"object",
+                    "id": "http://jsonschema.net/folders/0",
+                    "required":false,
+                    "properties":{
+                        "collection_id": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/folders/0/collection_id",
+                            "required":true
+                        },
+                        "collection_name": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/folders/0/collection_name",
+                            "required":false
+                        },
+                        "description": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/folders/0/description",
+                            "required":false
+                        },
+                        "id": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/folders/0/id",
+                            "required":false
+                        },
+                        "name": {
+                            "type":"string",
+                            "id": "http://jsonschema.net/folders/0/name",
+                            "required":false
+                        },
+                        "order": {
+                            "type":"array",
+                            "id": "http://jsonschema.net/folders/0/order",
+                            "required":true,
+                            "items":
+                                {
+                                    "type":"string",
+                                    "id": "http://jsonschema.net/folders/0/order/0",
+                                    "required":false
+                                }
+                        }
+                    }
+                }
+        },
         "order": {
             "type":"array",
             "id": "http://jsonschema.net/order",
