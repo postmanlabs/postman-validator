@@ -1,6 +1,6 @@
 {
-  "name": "postman-validator",
-  "version": "0.0.4",
+  "name": "postman_validator",
+  "version": "0.0.6",
   "description": "A validator for Postman file formats",
   "main": "postman_validator.js",
    "repository": {
@@ -22,7 +22,8 @@
   "dependencies": {
     "commander": "2.x.x",
     "JSV": "4.0.2",
-    "jsface": "2.2.x"
+    "jsface": "2.2.x",
+    "lodash": "*"
   },
   "author": "Abhijit Kane",
   "license": "Apache"

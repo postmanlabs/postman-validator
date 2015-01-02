@@ -75,7 +75,7 @@
         "order": {
             "type":"array",
             "id": "http://jsonschema.net/order",
-            "required":true,
+            "required":false,
             "items":
                 {
                     "type":"string",
@@ -104,7 +104,6 @@
                             "required":true
                         },
                         "data": {
-                            "type":"array",
                             "id": "http://jsonschema.net/requests/0/data",
                             "required":false
                         },
@@ -186,7 +185,7 @@
         "synced": {
             "type":"boolean",
             "id": "http://jsonschema.net/synced",
-            "required":true
+            "required":false
         },
         "timestamp": {
             "type":"number",
@@ -198,6 +197,4 @@
         {
             "required":false
         }
-    
-
 }
