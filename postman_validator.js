@@ -203,7 +203,6 @@ var postman_validator = jsface.Class({
 
 
 		//check for request duplication across orders
-		console.log(duplicatesPresent);
 		if(duplicatesPresent) {
 			if(correctDuplicates) {
 				var numOrders = allOrders.length;
@@ -228,8 +227,14 @@ var postman_validator = jsface.Class({
 
 		var diff = _.difference(requestIds, totalOrder);
 		if(diff.length!==0) {
-			var extraRequests = diff.join(", ");
-			return this._getReturnObj(false, "Request count not matching. "+extraRequests+" are defined, but not present in any order array");
+			if(correctDuplicates) {
+				console.log("Adding extra requests to root order");
+				json.order = json.order.concat(diff);
+			}
+			else {
+				var extraRequests = diff.join(", ");
+				return this._getReturnObj(false, "Request count not matching. "+extraRequests+" are defined, but not present in any order array");
+			}
 		}
 
 		diff = _.difference(totalOrder, requestIds);
