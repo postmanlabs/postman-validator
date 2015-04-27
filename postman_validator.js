@@ -59,14 +59,17 @@ var postman_validator = jsface.Class({
 			console.log("Invalid schema code");
 			return this._getReturnObj(false,"Invalid schema code",{});
 		}
-		var env = JSV.createEnvironment();
-		console.log("Env created");
-		var report = env.validate(input, schema);
-		if(report.errors.length) {
-			console.log("Report errors: " + JSON.stringify(report.errors));
-			return this._getReturnObj(false,"Validation failed",report.errors);
-		}
 
+		if(options.validateSchema!==false) {
+			var env = JSV.createEnvironment();
+			console.log("Env created");
+			var report = env.validate(input, schema);
+			if(report.errors.length) {
+				console.log("Report errors: " + JSON.stringify(report.errors));
+				return this._getReturnObj(false,"Validation failed",report.errors);
+			}
+		}
+		
 		//schema validation passed
 		//semantic validation only for collections
 		if(schemaCode==='c') {
@@ -196,6 +199,19 @@ var postman_validator = jsface.Class({
 				if(_.intersection(folders[i].order,totalOrder).length!==0){
 					duplicatesPresent = true;
 				}
+
+				//go through the folder order
+				//if there are any IDs not present in the requests array, remove
+				var orderLength = (folders[i].order)?folders[i].order.length:0;
+				var j;
+				for(j=0;j<orderLength;j++) {
+					if(requestIds.indexOf(folders[i].order[j])) == -1) {
+						folders[i].order.splice(j,1);
+						orderLength--;
+						j--;
+					}
+				}
+				
 				totalOrder = totalOrder.concat(folders[i].order);
 				allOrders.push(folders[i].order);
 			}
