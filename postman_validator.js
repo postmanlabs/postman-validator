@@ -60,7 +60,7 @@ var postman_validator = jsface.Class({
 			return this._getReturnObj(false,"Invalid schema code",{});
 		}
 
-		if(options.validateSchema!==false) {
+		if(options && options.validateSchema!==false) {
 			var env = JSV.createEnvironment();
 			console.log("Env created");
 			var report = env.validate(input, schema);
@@ -173,8 +173,11 @@ var postman_validator = jsface.Class({
 			}
 
 			for(var i=0;i<numRequest;i++) {
+				delete requests[i].folderId; //this is not supported at all!
+				delete requests[i].collectionRequestId; //this is not supported at all!
+				delete requests[i].collection; //this is not supported at all!
 				if(!requests[i].hasOwnProperty("id") || (typeof requests[i].id !== "string")) return this._getReturnObj(false, "Each request must have an ID (string)");
-				if(!requests[i].hasOwnProperty("collectionId") || (typeof requests[i].collectionId !== "string")) return this._getReturnObj(false, "Each request must have an collectionId field");
+				if(!requests[i].hasOwnProperty("collectionId") || (typeof requests[i].collectionId !== "string")) return this._getReturnObj(false, "Each request must have a collectionId field");
 				if(requests[i].collectionId !== collectionId) return this._getReturnObj(false, "Each request must have the same collectionId as the root collection object");
 				if(_.intersection([requests[i].id],requestIds).length!==0) {
 					duplicatesPresent = true;
@@ -184,6 +187,18 @@ var postman_validator = jsface.Class({
 		}
 		else {
 			return this._getReturnObj(false, "Requests[] must be present in the collection");
+		}
+
+		//go through totalOrder
+		//if any request is not there in request IDs, remove it from order
+		var toLength = totalOrder.length;
+		for(var i=0;i<toLength;i++) {
+			if(requestIds.indexOf(totalOrder[i])===-1) {
+				totalOrder.splice(i,1);
+				order.splice(i,1);
+				toLength--;
+				i--;
+			}
 		}
 
 		var folders = json.folders;
@@ -205,13 +220,13 @@ var postman_validator = jsface.Class({
 				var orderLength = (folders[i].order)?folders[i].order.length:0;
 				var j;
 				for(j=0;j<orderLength;j++) {
-					if(requestIds.indexOf(folders[i].order[j])) == -1) {
+					if(requestIds.indexOf(folders[i].order[j]) == -1) {
 						folders[i].order.splice(j,1);
 						orderLength--;
 						j--;
 					}
 				}
-				
+
 				totalOrder = totalOrder.concat(folders[i].order);
 				allOrders.push(folders[i].order);
 			}
@@ -268,5 +283,3 @@ var postman_validator = jsface.Class({
 });
 
 module.exports = postman_validator;
-
-
