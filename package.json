@@ -3,12 +3,14 @@
   "version": "0.0.8",
   "description": "A validator for Postman file formats",
   "main": "postman_validator.js",
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "git://github.com:abhijitkane/PostmanValidator.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "keywords": [
     "postman",
@@ -23,8 +25,10 @@
     "commander": "2.x.x",
     "JSV": "4.0.2",
     "jsface": "2.2.x",
-    "lodash": "*"
+    "lodash": "*",
+    "snyk": "^1.190.0"
   },
   "author": "Abhijit Kane",
-  "license": "Apache"
+  "license": "Apache",
+  "snyk": true
 }
