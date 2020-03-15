@@ -22,7 +22,7 @@
   "dependencies": {
     "commander": "2.x.x",
     "JSV": "4.0.2",
-    "jsface": "2.2.x",
+    "jsface": "2.4.9",
     "lodash": "*"
   },
   "author": "Abhijit Kane",
